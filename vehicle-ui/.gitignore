@@ -1,31 +1,5 @@
-# Python
-__pycache__/
-*.pyc
-*.pyo
-*.pyd
-.env
+# See https://docs.github.com/get-started/getting-started-with-git/ignoring-files for more about ignoring files.
 
-# Conda / venv
-venv/
-.env/
-*.conda
-
-# Django
-db.sqlite3
-staticfiles/
-media/
-
-# Node / Angular
-node_modules/
-dist/
-
-# OS
-.DS_Store
-Thumbs.db
-
-# IDE
-.vscode/
-.idea/
 # Compiled output
 /dist
 /tmp
