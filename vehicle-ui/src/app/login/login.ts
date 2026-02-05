@@ -1,36 +1,49 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Auth } from '../auth';
-import { Router } from '@angular/router';
-
+import { HttpClient } from '@angular/common/http';
+import { RouterLink, Router } from "@angular/router";
 
 @Component({
   selector: 'app-login',
-  imports: [CommonModule, FormsModule], 
+  standalone: true,
+  imports: [CommonModule, FormsModule, RouterLink],
   templateUrl: './login.html',
   styleUrl: './login.css',
 })
 export class Login {
+  private http = inject(HttpClient);
+  private router = inject(Router);
+
   email = '';
   password = '';
+  rememberMe = false;
+  
   error = '';
+  loading = false;
 
-  constructor(
-    private auth: Auth,
-    private router: Router
-  ){}
+  private readonly API_URL = 'http://127.0.0.1:8000/api/login/';
 
-  login(): void {
-     this.auth.login(this.email, this.password).subscribe({
-      next: (res: any) => {
-        this.auth.saveToken(res.access);
+  onLogin() {
+    this.error = '';
+    this.loading = true;
+
+    const payload = {
+      email: this.email,
+      password: this.password
+    };
+
+    this.http.post<any>(this.API_URL, payload).subscribe({
+      next: (res) => {
+        this.loading = false;
+        // Save token to localStorage if your API returns one
+        if (res.token) localStorage.setItem('token', res.token);
         this.router.navigate(['/dashboard']);
       },
-      error: () => {
-        this.error = 'Invalid email or password';
+      error: (err) => {
+        this.loading = false;
+        this.error = err.error?.message || 'Invalid email or password.';
       }
     });
   }
-
 }

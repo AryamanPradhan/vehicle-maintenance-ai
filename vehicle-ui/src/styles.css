@@ -1,1 +1,27 @@
 /* You can add global styles to this file, and also import other style files */
+/* src/styles.css */
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&display=swap");
+
+:root {
+  --primary-cyan: #00e5ff;
+  --glass-bg: rgba(255, 255, 255, 0.1);
+  --glass-border: rgba(255, 255, 255, 0.2);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Open Sans", sans-serif;
+}
+
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  width: 100%;
+  /* Dark background is REQUIRED to see the glass effect */
+  background: radial-gradient(circle at center, #1a1a2e 0%, #080810 100%);
+  overflow: hidden;
+}
